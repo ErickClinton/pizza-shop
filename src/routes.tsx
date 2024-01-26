@@ -5,11 +5,13 @@ import { SignUp } from '@/pages/auth/sign-up.tsx'
 import { AppLayout } from '@/pages/_layouts/app.tsx'
 import { Orders } from '@/pages/app/order/order.tsx'
 import { Dashboard } from '@/pages/dashboard/dashboard.tsx'
+import { NotFound } from '@/pages/404.tsx'
 
 export const router = createBrowserRouter([
   {
     path: '/',
     element: <AppLayout />,
+    errorElement: <NotFound />,
     children: [
       { path: '/', element: <Dashboard /> },
       { path: '/orders', element: <Orders /> },
