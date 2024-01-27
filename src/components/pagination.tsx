@@ -10,12 +10,14 @@ export interface IPaginationProps {
   pageIndex: number
   totalCount: number
   perPage: number
+  onPageChange: (pageIndex: number) => Promise<void> | void
 }
 
 export function Pagination({
   pageIndex,
   perPage,
   totalCount,
+  onPageChange,
 }: IPaginationProps) {
   const pages = Math.ceil(totalCount / perPage) || 1
 
@@ -31,19 +33,34 @@ export function Pagination({
           Página {pageIndex + 1} de {pages}
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="outline">
+          <Button
+            variant="outline"
+            onClick={() => onPageChange(0)}
+            disabled={pageIndex === 0}
+          >
             <ChevronsLeft />
             <span className="sr-only">Primeira página</span>
           </Button>
-          <Button variant="outline">
+          <Button
+            variant="outline"
+            onClick={() => onPageChange(pageIndex - 1)}
+            disabled={pageIndex === 0}
+          >
             <ChevronLeft className="h-4 w-4" />
             <span className="sr-only">Página anterior</span>
           </Button>
-          <Button variant="outline">
-            <ChevronRight className="h-4 w-4" />
+          <Button variant="outline" disabled={pages <= pageIndex + 1}>
+            <ChevronRight
+              className="h-4 w-4"
+              onClick={() => onPageChange(pageIndex + 1)}
+            />
             <span className="sr-only">Próxima página</span>
           </Button>
-          <Button variant="outline">
+          <Button
+            variant="outline"
+            onClick={() => onPageChange(pages - 1)}
+            disabled={pages <= pageIndex + 1}
+          >
             <ChevronsRight className="h-4 w-4" />
             <span className="sr-only">Última página</span>
           </Button>
